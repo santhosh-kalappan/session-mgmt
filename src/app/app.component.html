@@ -1,0 +1,48 @@
+<table class="table">
+  <thead>
+      <tr>
+          <td class="table-light" >
+            <div class="row">
+              <div class="col-8 text-center" style="vertical-align: middle; font-size: xx-large; padding-top:25px;">
+                MK FAB Badminton Club
+              </div>
+              <div class="col-4">
+                <label for="basic-url" class="form-label">Courts:</label>
+                <div class="input-group" style="width:175px;">
+                  <button type="button" class="btn btn-outline-secondary" (click)="removeCourt(courtno.value)">-</button>
+                  <input id="courtno" name="courtno" class="form-control" #courtno type="number" placeholder="Court No" autocomplete="off" style="padding-left:20px">
+                  <button href="#" class="btn btn-outline-secondary" (click)="addCourt(courtno.value)">+</button>
+                </div>
+              </div>
+            </div>
+          </td>
+      </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="table-light">
+        <div class="row" *ngIf="courtNos.length == 0">
+          <div class="col-12" style="text-align: center;">
+            <h1>Add Courts</h1>
+          </div>
+        </div>        
+        <div class="row">
+          <div class="col-3" *ngFor="let courtNo of courtNos">
+            <app-court [players]="players" [id]="courtNo" [scores]="scores"></app-court>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="row" style="margin-top: 15px;">
+  <div class="col-6" style="border-right: 1px solid black;">
+    <div class="container">
+      <app-player [players]="players"></app-player>
+    </div>
+  </div>
+  <div class="col-6">
+    <app-result [scores]="scores"></app-result>
+  </div>
+</div>

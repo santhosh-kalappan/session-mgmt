@@ -1,0 +1,47 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.mat-card {
+  background: #fff;
+  color:#424242;
+}
+
+.busy {
+  color: red;
+}
+
+.free {
+  color: green;
+}
+
+.court {
+  border: solid 1px;
+  border-color: white;
+}
+
+.court .center {
+  background-color: lightgreen;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  min-height: 60px;
+  padding-top: 20px;
+}
+
+.score input {
+  max-width: 20px;
+}
+
+.court .outside {
+  background-color: lightblue;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
+}
+
+.court .outside .row {
+  height: 50px;
+}

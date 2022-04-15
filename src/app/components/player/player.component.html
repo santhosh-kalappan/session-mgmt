@@ -1,0 +1,20 @@
+<div class="row">
+  <form class="col" (ngSubmit)="add()" [formGroup]="playerForm">
+    <div class="input-group input-group-lg">
+      <div class="mb-3">
+        <label for="addPlayer" class="form-label">Add Player</label>
+        <input id="addPlayer" formControlName="name" type="text" class="form-control form-control-lg" autocomplete="off"
+          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" (keyup.enter)="add()">
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Players not playing -->
+<div class="row">
+  <div class="col">
+    <h3>Attendees</h3>
+    <button type="button" class="btn btn-rounded btn-dark rounded-pill" *ngFor="let player of players" style="margin: 10px">
+      {{player.name}} <i class="bi bi-x-circle-fill" (click)="remove(player.id)"></i>
+    </button>
+  </div>
+</div>
