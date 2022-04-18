@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Player, Court, Game } from 'src/app/model/model';
 import { FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-court',
@@ -11,10 +12,15 @@ export class CourtComponent implements OnInit {
 
   @Input() players!: Player[];
   @Input() id!: number;
-  @Input() scores!: string[]; 
+  @Input() scores!: string[];
+  @Output() newItemEvent = new EventEmitter<string>();
   court!: Court;
   p1Score: number = 0;
   p2Score: number = 0;
+
+  removeCourt() {
+    this.newItemEvent.emit(this.court.id + "");
+  }
 
   constructor(private formBuilder: FormBuilder) { 
 

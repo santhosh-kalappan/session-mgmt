@@ -10,7 +10,7 @@
                 <label for="basic-url" class="form-label">Courts:</label>
                 <div class="input-group" style="width:175px;">
                   <button type="button" class="btn btn-outline-secondary" (click)="removeCourt(courtno.value)">-</button>
-                  <input id="courtno" name="courtno" class="form-control" #courtno type="number" placeholder="Court No" autocomplete="off" style="padding-left:20px">
+                  <input id="courtno" name="courtno" min="1" class="form-control" #courtno type="number" placeholder="Court No" autocomplete="off" style="padding-left:20px">
                   <button href="#" class="btn btn-outline-secondary" (click)="addCourt(courtno.value)">+</button>
                 </div>
               </div>
@@ -28,7 +28,7 @@
         </div>        
         <div class="row">
           <div class="col-3" *ngFor="let courtNo of courtNos">
-            <app-court [players]="players" [id]="courtNo" [scores]="scores"></app-court>
+            <app-court [players]="players" [id]="courtNo" [scores]="scores" (newItemEvent)="removeCourt($event)"></app-court>
           </div>
         </div>
       </td>
