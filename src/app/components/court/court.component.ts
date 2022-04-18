@@ -20,6 +20,9 @@ export class CourtComponent implements OnInit {
 
   removeCourt() {
     this.newItemEvent.emit(this.court.id + "");
+    if (this.court.gameOn) {
+      this.players.push(this.court.pair1[0], this.court.pair1[1], this.court.pair2[0], this.court.pair2[1]);
+    }
   }
 
   constructor(private formBuilder: FormBuilder) { 
@@ -94,18 +97,20 @@ export class CourtComponent implements OnInit {
     return formattedScore;
   }
 
-  updateP2Score() {
-    if (this.p1Score < 21) 
+  updateP2Score(score: number) {
+    this.p1Score = score;
+    if (score < 20) 
       this.p2Score = 21;
     else 
-      this.p2Score = this.p1Score + 2;
+      this.p2Score = score + 2;
   }
 
-  updateP1Score() {
-    if (this.p2Score < 21) 
+  updateP1Score(score: number) {
+    this.p2Score = score;
+    if (score < 20) 
       this.p1Score = 21;
     else 
-      this.p1Score = this.p2Score + 2;
+      this.p1Score = score + 2;
   }
 
 }
