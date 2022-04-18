@@ -13,7 +13,6 @@ export class AppComponent {
   courtNos: number[] = [];
   players: Player[] = [];
   scores: string[] = [];
-  @ViewChild('courtno')courtno!: ElementRef;
 
   constructor(private formBuilder: FormBuilder) { 
   }
@@ -22,23 +21,21 @@ export class AppComponent {
     
   }
 
-  addCourt(courtId: string): void {
-    if (this.courtno.nativeElement.value != "") {
-      this.courtNos.push(parseInt(courtId));
-      this.courtno.nativeElement.value = "";
-    }
+  addCourt(courtId: number, el: HTMLButtonElement): void {
+      this.courtNos.push(courtId);
+      el.disabled = true;
   }
 
   removeCourt(courtId: string): void {
     if (this.courtNos.length > 0) {
+      var btn = document.getElementById('court' + courtId)!;
+      btn.removeAttribute("disabled");
       for (var i = 0; i < this.courtNos.length; i++) {
         if (this.courtNos[i] == parseInt(courtId)) {
           this.courtNos.splice(i, 1);
-          this.courtno.nativeElement.value = "";
           return;
         }
       }
     }
   }
-
 }

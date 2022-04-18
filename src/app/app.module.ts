@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialExampleModule } from './material.module';
 import { CourtComponent } from './components/court/court.component';
 import { PlayerComponent } from './components/player/player.component';
 import { ResultComponent } from './components/result/result.component';
@@ -19,8 +18,7 @@ import { ResultComponent } from './components/result/result.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialExampleModule,FormsModule,ReactiveFormsModule
+    BrowserAnimationsModule,FormsModule,ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

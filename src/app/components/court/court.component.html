@@ -59,9 +59,9 @@
         </div>
         <div class="row">
             <div class="col">
-                <a href="#" class="btn btn-primary" (click)="suggest()" *ngIf="!court.gameOn">Suggest</a>
-                <a href="#" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn">End</a>
-                <a href="#" class="btn btn-primary" (click)="removeCourt()" style="float:right">Close Court</a>
+                <button href="#" class="btn btn-primary" (click)="suggest()" *ngIf="!court.gameOn">Suggest</button>
+                <button href="#" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn" [disabled]="p1Score == 0 && p2Score == 0">End</button>
+                <button href="#" class="btn btn-primary" (click)="removeCourt()" style="float:right">Close Court</button>
             </div>
         </div>
     </div>

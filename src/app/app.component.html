@@ -1,34 +1,38 @@
 <table class="table">
   <thead>
-      <tr>
-          <td class="table-light" >
-            <div class="row">
-              <div class="col-8 text-center" style="vertical-align: middle; font-size: xx-large; padding-top:25px;">
-                MK FAB Badminton Club
-              </div>
-              <div class="col-4">
-                <label for="basic-url" class="form-label">Courts:</label>
-                <div class="input-group" style="width:175px;">
-                  <button type="button" class="btn btn-outline-secondary" (click)="removeCourt(courtno.value)">-</button>
-                  <input id="courtno" name="courtno" min="1" class="form-control" #courtno type="number" placeholder="Court No" autocomplete="off" style="padding-left:20px">
-                  <button href="#" class="btn btn-outline-secondary" (click)="addCourt(courtno.value)">+</button>
-                </div>
-              </div>
-            </div>
-          </td>
-      </tr>
+    <tr>
+      <td class="table-light">
+        <div class="row">
+          <div class="col-8" style="vertical-align: middle; font-size: xx-large; padding-top:25px;">
+            MK FAB Badminton Club
+          </div>
+          <div class="col-4" *ngIf="courtNos.length > 0">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courtNoModal">
+              Add more courts</button>
+            <!-- <label for="basic-url" class="form-label">Courts:</label>
+            <div class="input-group" style="width:175px; text-align: right;">
+              <input id="courtno" name="courtno" min="1" class="form-control" #courtno type="number"
+                placeholder="Add Court" autocomplete="off" style="padding-left:20px"
+                data-bs-toggle="modal" data-bs-target="#courtNoModal">
+            </div> -->
+          </div>
+        </div>
+      </td>
+    </tr>
   </thead>
   <tbody>
     <tr>
       <td class="table-light">
         <div class="row" *ngIf="courtNos.length == 0">
           <div class="col-12" style="text-align: center;">
-            <h1>Add Courts</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courtNoModal">
+            Add Courts</button>
           </div>
-        </div>        
+        </div>
         <div class="row">
           <div class="col-3" *ngFor="let courtNo of courtNos">
-            <app-court [players]="players" [id]="courtNo" [scores]="scores" (newItemEvent)="removeCourt($event)"></app-court>
+            <app-court [players]="players" [id]="courtNo" [scores]="scores" (newItemEvent)="removeCourt($event)">
+            </app-court>
           </div>
         </div>
       </td>
@@ -44,5 +48,33 @@
   </div>
   <div class="col-6">
     <app-result [scores]="scores"></app-result>
+  </div>
+</div>
+<div class="modal" tabindex="-1" id="courtNoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Select Court No</span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-1"><button id="court1" #court1 class="btn btn-primary" (click)="addCourt(1, court1)">01</button></div>
+            <div class="col-1"><button id="court2" #court2 class="btn btn-primary" (click)="addCourt(2, court2)">02</button></div>
+            <div class="col-1"><button id="court3" #court3 class="btn btn-primary" (click)="addCourt(3, court3)">03</button></div>
+            <div class="col-1"><button id="court4" #court4 class="btn btn-primary" (click)="addCourt(4, court4)">04</button></div>
+            <div class="col-1"><button id="court5" #court5 class="btn btn-primary" (click)="addCourt(5, court5)">05</button></div>
+            <div class="col-1"><button id="court6" #court6 class="btn btn-primary" (click)="addCourt(6, court6)">06</button></div>
+            <div class="col-1"><button id="court7" #court7 class="btn btn-primary" (click)="addCourt(7, court7)">07</button></div>
+            <div class="col-1"><button id="court8" #court8 class="btn btn-primary" (click)="addCourt(8, court8)">08</button></div>
+            <div class="col-1"><button id="court9" #court9 class="btn btn-primary" (click)="addCourt(9, court9)">09</button></div>
+            <div class="col-1"><button id="court10" #court10 class="btn btn-primary" (click)="addCourt(10, court10)">10</button></div>
+            <div class="col-1"><button id="court11" #court11 class="btn btn-primary" (click)="addCourt(11, court11)">11</button></div>
+            <div class="col-1"><button id="court12" #court12 class="btn btn-primary" (click)="addCourt(12, court12)">12</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

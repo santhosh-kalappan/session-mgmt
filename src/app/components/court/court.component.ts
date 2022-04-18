@@ -103,6 +103,10 @@ export class CourtComponent implements OnInit {
       this.p2Score = 21;
     else 
       this.p2Score = score + 2;
+
+    /* var p1ScoreModal = document.getElementById("p1ScoreModal")!;
+    p1ScoreModal.style.display = "none"; */
+    
   }
 
   updateP1Score(score: number) {
@@ -111,6 +115,9 @@ export class CourtComponent implements OnInit {
       this.p1Score = 21;
     else 
       this.p1Score = score + 2;
+
+      /* var p2ScoreModal = document.getElementById("p2ScoreModal")!;
+      p2ScoreModal.style.display = "none"; */ 
   }
 
 }
