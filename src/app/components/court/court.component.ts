@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Player, Court, Game } from 'src/app/model/model';
-import { FormBuilder, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-court',
@@ -12,11 +10,9 @@ export class CourtComponent implements OnInit {
 
   @Input() players!: Player[];
   @Input() id!: number;
-  @Input() scores!: string[];
+  @Input() games: Game[] = [];
   @Output() newItemEvent = new EventEmitter<string>();
   court!: Court;
-  p1Score: number = 0;
-  p2Score: number = 0;
 
   removeCourt() {
     this.newItemEvent.emit(this.court.id + "");
@@ -25,34 +21,37 @@ export class CourtComponent implements OnInit {
     }
   }
 
-  constructor(private formBuilder: FormBuilder) { 
+  constructor() {
 
   }
 
   ngOnInit(): void {
-    this.court = ({id: this.id, pair1: [{id: 1, name: "Player1", previousPairs:[], playing: false}, {id: 2, name: "Player2", previousPairs:[], playing: false}],
-                      pair2: [{id: 1, name: "Player3", previousPairs:[], playing: false}, {id: 2, name: "Player4", previousPairs:[], playing: false}], gameOn: false});
+    this.court = ({
+      id: this.id, pair1: [{ id: 1, name: "Player1", previousPairs: [], playing: false }, { id: 2, name: "Player2", previousPairs: [], playing: false }],
+      pair2: [{ id: 1, name: "Player3", previousPairs: [], playing: false }, { id: 2, name: "Player4", previousPairs: [], playing: false }], gameOn: false, p1Score: 0, p2Score: 0
+    });
   }
 
   end(): void {
-    let game:Game = {
-      courtId: this.court.id, 
-      pair1: this.court.pair1[0].name + "/" + this.court.pair1[1].name, 
-      pair2: this.court.pair2[0].name + "/" + this.court.pair2[1].name, 
-      p1Score: this.p1Score,
-      p2Score: this.p2Score
+    let game: Game = {
+      courtId: this.court.id,
+      pair1: this.court.pair1[0].name + "/" + this.court.pair1[1].name,
+      pair2: this.court.pair2[0].name + "/" + this.court.pair2[1].name,
+      p1Score: this.court.p1Score,
+      p2Score: this.court.p2Score
     };
-    this.scores.push(this.getFormattedScore(game));
+    this.games.push(game);
     this.resetCourt(this.court);
-    this.p1Score = 0;
-    this.p2Score = 0;
+
   }
 
-  resetCourt(court:Court): void {
+  resetCourt(court: Court): void {
     this.players.push(court.pair1[0], court.pair1[1], court.pair2[0], court.pair2[1]);
     court.gameOn = false;
-    court.pair1 = [{id: 1, name: "Player1", previousPairs:[], playing: false}, {id: 2, name: "Player2", previousPairs:[], playing: false}];
-    court.pair2 = [{id: 1, name: "Player3", previousPairs:[], playing: false}, {id: 2, name: "Player4", previousPairs:[], playing: false}];
+    court.pair1 = [{ id: 1, name: "Player1", previousPairs: [], playing: false }, { id: 2, name: "Player2", previousPairs: [], playing: false }];
+    court.pair2 = [{ id: 1, name: "Player3", previousPairs: [], playing: false }, { id: 2, name: "Player4", previousPairs: [], playing: false }];
+    court.p1Score = 0;
+    court.p2Score = 0;
   }
 
   suggest(): void {
@@ -63,7 +62,7 @@ export class CourtComponent implements OnInit {
     }
   }
 
-  createPair() : Player[] {
+  createPair(): Player[] {
     var pair: Player[] = [];
     var player1: Player = this.players.splice(this.getRandomIndex(this.players.length - 1), 1)[0];
     var player2: Player = this.findPartner(player1);
@@ -90,34 +89,48 @@ export class CourtComponent implements OnInit {
     return this.players.splice(0, 1)[0];
   }
 
-  getFormattedScore(game: Game) {
-    var formattedScore = "Court " + this.court.id + ": " + (game.p1Score > game.p2Score ? game.pair1 : game.pair2) + " Vs ";
-    formattedScore += (game.p1Score > game.p2Score ? game.pair2 : game.pair1) + " ";
-    formattedScore += game.p1Score > game.p2Score ? game.p1Score + " - " + game.p2Score : game.p2Score + " - " + game.p1Score;
-    return formattedScore;
-  }
-
   updateP2Score(score: number) {
-    this.p1Score = score;
-    if (score < 20) 
-      this.p2Score = 21;
-    else 
-      this.p2Score = score + 2;
+    this.court.p1Score = score;
+    if (score < 20)
+      this.court.p2Score = 21;
+    else
+      this.court.p2Score = score + 2;
 
-    /* var p1ScoreModal = document.getElementById("p1ScoreModal")!;
-    p1ScoreModal.style.display = "none"; */
-    
+    this.closeP1ScoreModal();
+
   }
 
   updateP1Score(score: number) {
-    this.p2Score = score;
-    if (score < 20) 
-      this.p1Score = 21;
-    else 
-      this.p1Score = score + 2;
+    this.court.p2Score = score;
+    if (score < 20)
+      this.court.p1Score = 21;
+    else
+      this.court.p1Score = score + 2;
+    this.closeP2ScoreModal()
+  }
 
-      /* var p2ScoreModal = document.getElementById("p2ScoreModal")!;
-      p2ScoreModal.style.display = "none"; */ 
+  openP1ScoreModal() {
+    if (this.court.gameOn) {
+      var p1ScoreModal = document.getElementById("p1ScoreModal" + this.court.id)!;
+      p1ScoreModal.style.display = "block";
+    }
+  }
+
+  openP2ScoreModal() {
+    if (this.court.gameOn) {
+      var p2ScoreModal = document.getElementById("p2ScoreModal" + this.court.id)!;
+      p2ScoreModal.style.display = "block";
+    }
+  }
+
+  closeP1ScoreModal() {
+    var p1ScoreModal = document.getElementById("p1ScoreModal" + this.court.id)!;
+    p1ScoreModal.style.display = "none";
+  }
+
+  closeP2ScoreModal() {
+    var p2ScoreModal = document.getElementById("p2ScoreModal" + this.court.id)!;
+    p2ScoreModal.style.display = "none";
   }
 
 }

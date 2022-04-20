@@ -6,7 +6,7 @@
                     <thead>
                         <tr>
                             <td class="table-light text-center" style="vertical-align: middle;">
-                                <span style="color:black; float:left">Court {{id==0 ? '' : id}}</span>
+                                <span style="color:black; float:left">Court {{id == 0 ? '' : id}}</span>
                                 <span style="float:right"
                                     [ngClass]="{'busy': court.gameOn, 'free': !court.gameOn}">{{court.gameOn ? "BUSY" :
                                     "FREE"}}</span>
@@ -25,9 +25,8 @@
                                 {{court.pair1[0].name + " / " + court.pair1[1].name}}</td>
                             <td class="col-2">
                                 <div class="input-group" style="width: 50px">
-                                    <input [(ngModel)]="p1Score" type="number" autocomplete="off" class="form-control"
-                                        [readonly]="!court.gameOn" (keyup.enter)="end()"
-                                        data-bs-toggle="modal" data-bs-target="#p1ScoreModal">
+                                    <input [(ngModel)]="court.p1Score" type="number" autocomplete="off" class="form-control"
+                                        [readonly]="!court.gameOn" (keyup.enter)="end()" (focus)="openP1ScoreModal()">
                                 </div>
                             </td>
                         </tr>
@@ -47,9 +46,8 @@
                                 {{court.pair2[0].name + " / " + court.pair2[1].name}}</td>
                             <td class="col-2">
                                 <div class="input-group" style="width: 50px">
-                                    <input [(ngModel)]="p2Score" type="number" autocomplete="off" class="form-control"
-                                        [readonly]="!court.gameOn" (keyup.enter)="end()"
-                                        data-bs-toggle="modal" data-bs-target="#p2ScoreModal">
+                                    <input [(ngModel)]="court.p2Score" type="number" autocomplete="off" class="form-control"
+                                        [readonly]="!court.gameOn" (keyup.enter)="end()" (focus)="openP2ScoreModal()">
                                 </div>
                             </td>
                         </tr>
@@ -60,13 +58,13 @@
         <div class="row">
             <div class="col">
                 <button href="#" class="btn btn-primary" (click)="suggest()" *ngIf="!court.gameOn">Suggest</button>
-                <button href="#" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn" [disabled]="p1Score == 0 && p2Score == 0">End</button>
+                <button href="#" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn" [disabled]="court.p1Score == 0 && court.p2Score == 0">End</button>
                 <button href="#" class="btn btn-primary" (click)="removeCourt()" style="float:right">Close Court</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal" tabindex="-1" id="p1ScoreModal" *ngIf="court.gameOn">
+<div class="modal" [id]="'p1ScoreModal' + court.id">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -76,67 +74,39 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(1)">01</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(2)">02</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(3)">03</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(4)">04</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(5)">05</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(6)">06</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(7)">07</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(8)">08</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(9)">09</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(10)">10</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(11)">11</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(12)">12</button></div>
+                        <div class="col-1" *ngFor="let number of [1,2,3,4,5,6,7,8,9,10,11,12]">
+                            <button class="btn btn-primary" (click)="updateP2Score(number)" data-bs-dismiss="modal" data-bs-target="#p1ScoreModal">
+                                {{number < 10 ? '0' + number : number }}
+                            </button>
+                        </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(13)">13</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(14)">14</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(15)">15</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(16)">16</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(17)">17</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(18)">18</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(19)">19</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(20)">20</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(21)">21</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(22)">22</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(23)">23</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(24)">24</button></div>
+                        <div class="col-1" *ngFor="let number of [13,14,15,16,17,18,19,20,21,22,23,24]">
+                            <button class="btn btn-primary" (click)="updateP2Score(number)" data-bs-dismiss="modal" data-bs-target="#p1ScoreModal">
+                                {{number}}
+                            </button>
+                        </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(25)">25</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(26)">26</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(27)">27</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(28)">28</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(29)">29</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(30)">30</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(31)">31</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(32)">32</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(33)">33</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(34)">34</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(35)">35</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(36)">36</button></div>
+                        <div class="col-1" *ngFor="let number of [25,26,27,28,29,30,31,32,33,34,35,36]">
+                            <button class="btn btn-primary" (click)="updateP2Score(number)" data-bs-dismiss="modal" data-bs-target="#p1ScoreModal">
+                                {{number}}
+                            </button>
+                        </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(37)">37</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(38)">38</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(39)">39</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(40)">40</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(41)">41</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(42)">42</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(43)">43</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(44)">44</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(45)">45</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(46)">46</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(47)">47</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP2Score(48)">48</button></div>
+                        <div class="col-1" *ngFor="let number of [37,38,39,40,41,42,43,44,45,46,47,48]">
+                            <button class="btn btn-primary" (click)="updateP2Score(number)" data-bs-dismiss="modal" (data-bs-target)="updateP1Score">
+                                {{number}}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal" tabindex="-1" id="p2ScoreModal" *ngIf="court.gameOn">
+<div class="modal" [id]="'p2ScoreModal' + court.id">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -146,60 +116,32 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(1)">01</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(2)">02</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(3)">03</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(4)">04</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(5)">05</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(6)">06</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(7)">07</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(8)">08</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(9)">09</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(10)">10</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(11)">11</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(12)">12</button></div>
+                        <div class="col-1" *ngFor="let number of [1,2,3,4,5,6,7,8,9,10,11,12]">
+                            <button class="btn btn-primary" (click)="updateP1Score(number)" data-bs-dismiss="modal" data-bs-target="#p2ScoreModal">
+                                {{number < 10 ? '0' + number : number }}
+                            </button>
+                        </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(13)">13</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(14)">14</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(15)">15</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(16)">16</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(17)">17</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(18)">18</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(19)">19</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(20)">20</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(21)">21</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(22)">22</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(23)">23</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(24)">24</button></div>
+                        <div class="col-1" *ngFor="let number of [13,14,15,16,17,18,19,20,21,22,23,24]">
+                            <button class="btn btn-primary" (click)="updateP1Score(number)" data-bs-dismiss="modal" data-bs-target="#p2ScoreModal">
+                                {{number}}
+                            </button>
+                        </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(25)">25</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(26)">26</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(27)">27</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(28)">28</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(29)">29</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(30)">30</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(31)">31</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(32)">32</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(33)">33</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(34)">34</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(35)">35</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(36)">36</button></div>
+                        <div class="col-1" *ngFor="let number of [25,26,27,28,29,30,31,32,33,34,35,36]">
+                            <button class="btn btn-primary" (click)="updateP1Score(number)" data-bs-dismiss="modal" data-bs-target="#p2ScoreModal">
+                                {{number}}
+                            </button>
+                        </div>
                     </div>
                     <div class="row" style="margin-top: 10px;">
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(37)">37</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(38)">38</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(39)">39</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(40)">40</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(41)">41</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(42)">42</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(43)">43</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(44)">44</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(45)">45</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(46)">46</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(47)">47</button></div>
-                        <div class="col-1"><button class="btn btn-primary" (click)="updateP1Score(48)">48</button></div>
+                        <div class="col-1" *ngFor="let number of [37,38,39,40,41,42,43,44,45,46,47,48]">
+                            <button class="btn btn-primary" (click)="updateP1Score(number)" data-bs-dismiss="modal" data-bs-target="#p2ScoreModal">
+                                {{number}}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,12 +9,6 @@
           <div class="col-4" *ngIf="courtNos.length > 0">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courtNoModal">
               Add more courts</button>
-            <!-- <label for="basic-url" class="form-label">Courts:</label>
-            <div class="input-group" style="width:175px; text-align: right;">
-              <input id="courtno" name="courtno" min="1" class="form-control" #courtno type="number"
-                placeholder="Add Court" autocomplete="off" style="padding-left:20px"
-                data-bs-toggle="modal" data-bs-target="#courtNoModal">
-            </div> -->
           </div>
         </div>
       </td>
@@ -31,8 +25,7 @@
         </div>
         <div class="row">
           <div class="col-3" *ngFor="let courtNo of courtNos">
-            <app-court [players]="players" [id]="courtNo" [scores]="scores" (newItemEvent)="removeCourt($event)">
-            </app-court>
+            <app-court [players]="players" [id]="courtNo" [games]="games" (newItemEvent)="removeCourt($event)"></app-court>
           </div>
         </div>
       </td>
@@ -40,16 +33,15 @@
   </tbody>
 </table>
 
-<div class="row" style="margin-top: 15px;">
-  <div class="col-6" style="border-right: 1px solid black;">
-    <div class="container">
-      <app-player [players]="players"></app-player>
-    </div>
-  </div>
-  <div class="col-6">
-    <app-result [scores]="scores"></app-result>
+<app-player [players]="players"></app-player>
+  
+
+<div class="row">
+  <div class="col-3" *ngFor="let courtNo of courtNos">
+    <app-result [scores]="scores" [games]="games" [courtId]="courtNo"></app-result>
   </div>
 </div>
+
 <div class="modal" tabindex="-1" id="courtNoModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

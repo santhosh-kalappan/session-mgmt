@@ -10,6 +10,8 @@ export interface Court {
   pair1: Player[],
   pair2: Player[],
   gameOn: boolean | false,
+  p1Score: number,
+  p2Score: number
 }
 
 export interface Game {

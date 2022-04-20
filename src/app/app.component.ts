@@ -11,14 +11,21 @@ import { Player, Court, Game } from './model/model';
 })
 export class AppComponent {
   courtNos: number[] = [];
+  courts: Court[] = [];
   players: Player[] = [];
   scores: string[] = [];
+  games: Game[] = [];
 
   constructor(private formBuilder: FormBuilder) { 
   }
 
   ngOnInit(): void {
-    
+    window.addEventListener("keyup", disableF5);
+    window.addEventListener("keydown", disableF5);
+   
+    function disableF5(e:any) {
+       if ((e.which || e.keyCode) == 116) e.preventDefault(); 
+    };
   }
 
   addCourt(courtId: number, el: HTMLButtonElement): void {
