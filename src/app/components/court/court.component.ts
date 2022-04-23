@@ -133,4 +133,13 @@ export class CourtComponent implements OnInit {
     p2ScoreModal.style.display = "none";
   }
 
+  cancelGame() {
+    this.court.pair1[0].previousPairs.pop();
+    this.court.pair1[1].previousPairs.pop();
+    this.court.pair2[0].previousPairs.pop();
+    this.court.pair2[1].previousPairs.pop();
+    this.resetCourt(this.court);
+
+  }
+
 }

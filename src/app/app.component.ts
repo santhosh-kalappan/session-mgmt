@@ -1,6 +1,4 @@
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { compileNgModuleDeclarationExpression } from '@angular/compiler/src/render3/r3_module_compiler';
-import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component } from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import { Player, Court, Game } from './model/model';
 

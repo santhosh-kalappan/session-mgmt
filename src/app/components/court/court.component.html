@@ -57,9 +57,10 @@
         </div>
         <div class="row">
             <div class="col">
-                <button href="#" class="btn btn-primary" (click)="suggest()" *ngIf="!court.gameOn">Suggest</button>
-                <button href="#" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn" [disabled]="court.p1Score == 0 && court.p2Score == 0">End</button>
-                <button href="#" class="btn btn-primary" (click)="removeCourt()" style="float:right">Close Court</button>
+                <button type="button" class="btn btn-primary btn-success" (click)="suggest()" *ngIf="!court.gameOn">Suggest</button>
+                <button type="button" class="btn btn-primary btn-warning" (click)="cancelGame()" *ngIf="court.gameOn && court.p1Score == 0 && court.p2Score == 0">Cancel Game</button>
+                <button type="button" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn && (court.p1Score > 0 || court.p2Score > 0)">End Game</button>
+                <button type="button" class="btn btn-primary btn-dark" (click)="removeCourt()" style="float:right">Close Court</button>
             </div>
         </div>
     </div>
@@ -69,7 +70,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span>{{court.pair1[0].name + " / " + court.pair1[1].name}}</span>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeP1ScoreModal()"></button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -111,7 +112,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <span>{{court.pair2[0].name + " / " + court.pair2[1].name}}</span>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeP2ScoreModal()"></button>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
