@@ -1,4 +1,4 @@
-<div class="row" style=>
+<div class="row">
   <div class="col-2">
     <form (ngSubmit)="add()" [formGroup]="playerForm">
       <div class="input-group">
@@ -11,9 +11,16 @@
       </div>
     </form>
   </div>
-  <div class="col-10">
-    <button type="button" class="btn btn-rounded btn-dark rounded-pill btn-sm" *ngFor="let player of players" style="margin-right: 10px; margin-top:10px">
-      {{player.name}} <i class="bi bi-x-circle-fill" (click)="remove(player.id)"></i>
+  <div class="col-8" style="border-right: 1px black solid;">
+    <button type="button" class="btn btn-success btn-rounded rounded-pill btn-sm" *ngFor="let player of players" style="margin-right: 10px; margin-top:10px">
+      <i class="bi bi-pause-circle-fill" (click)="rest(player.id)"></i> {{player.name}} <i class="bi bi-x-circle-fill" (click)="remove(player.id)"></i>
     </button>
   </div>
+
+  <div class="col-2">
+    <button type="button" class="btn btn-secondary btn-rounded rounded-pill btn-sm" *ngFor="let player of restingPlayers" style="margin-right: 10px; margin-top:10px">
+      <i class="bi bi-play-circle-fill" (click)="play(player.id)"></i> {{player.name}} <i class="bi bi-x-circle-fill" (click)="remove(player.id)"></i>
+    </button>
+  </div>
+
 </div>

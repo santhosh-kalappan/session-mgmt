@@ -48,8 +48,8 @@ export class CourtComponent implements OnInit {
   resetCourt(court: Court): void {
     this.players.push(court.pair1[0], court.pair1[1], court.pair2[0], court.pair2[1]);
     court.gameOn = false;
-    court.pair1 = [{ id: 1, name: "Player1", previousPairs: [], playing: false }, { id: 2, name: "Player2", previousPairs: [], playing: false }];
-    court.pair2 = [{ id: 1, name: "Player3", previousPairs: [], playing: false }, { id: 2, name: "Player4", previousPairs: [], playing: false }];
+    court.pair1 = [{ id: 1, name: "Player1", previousPairs: [], playing: false}, { id: 2, name: "Player2", previousPairs: [], playing: false}];
+    court.pair2 = [{ id: 3, name: "Player3", previousPairs: [], playing: false}, { id: 4, name: "Player4", previousPairs: [], playing: false}];
     court.p1Score = 0;
     court.p2Score = 0;
   }
@@ -139,7 +139,6 @@ export class CourtComponent implements OnInit {
     this.court.pair2[0].previousPairs.pop();
     this.court.pair2[1].previousPairs.pop();
     this.resetCourt(this.court);
-
   }
 
 }

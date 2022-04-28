@@ -11,6 +11,7 @@ export class AppComponent {
   courtNos: number[] = [];
   courts: Court[] = [];
   players: Player[] = [];
+  restingPlayers: Player[] = [];
   scores: string[] = [];
   games: Game[] = [];
 

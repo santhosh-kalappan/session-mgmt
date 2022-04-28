@@ -60,7 +60,7 @@
                 <button type="button" class="btn btn-primary btn-success" (click)="suggest()" *ngIf="!court.gameOn">Suggest</button>
                 <button type="button" class="btn btn-primary btn-warning" (click)="cancelGame()" *ngIf="court.gameOn && court.p1Score == 0 && court.p2Score == 0">Cancel Game</button>
                 <button type="button" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn && (court.p1Score > 0 || court.p2Score > 0)">End Game</button>
-                <button type="button" class="btn btn-primary btn-dark" (click)="removeCourt()" style="float:right">Close Court</button>
+                <button type="button" class="btn btn-primary btn-dark" (click)="removeCourt()" style="float:right" *ngIf="!court.gameOn">Close Court</button>
             </div>
         </div>
     </div>

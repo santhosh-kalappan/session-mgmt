@@ -10,6 +10,7 @@ import { Player } from 'src/app/model/model';
 export class PlayerComponent implements OnInit {
 
   @Input() players!: Player[];
+  @Input() restingPlayers!: Player[];
   playersCount: number = 0;
 
   playerForm = this.formBuilder.group({
@@ -35,6 +36,18 @@ export class PlayerComponent implements OnInit {
     var index = this.players.findIndex(player => player.id == id);
     this.players.splice(index, 1);
     this.playersCount--;
+  }
+
+  rest(id: number): void {
+    var index = this.players.findIndex(player => player.id == id);
+    this.restingPlayers.push(this.players[index]);
+    this.players.splice(index, 1);
+  }
+
+  play(id: number): void {
+    var index = this.restingPlayers.findIndex(player => player.id == id);
+    this.players.push(this.restingPlayers[index]);
+    this.restingPlayers.splice(index, 1);
   }
 
 }
