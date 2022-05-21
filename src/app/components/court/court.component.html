@@ -20,14 +20,28 @@
             <div class="col">
                 <table class="table table-dark">
                     <thead>
-                        <tr>
+                        <tr *ngIf="!setPlayers || court.gameOn">
                             <td class="table-dark text-center" style="vertical-align: middle; font-size: small">
-                                {{court.pair1[0].name + " / " + court.pair1[1].name}}</td>
+                                {{court.pair1[0].name + " / " + court.pair1[1].name}}</td>    
                             <td class="col-2">
                                 <div class="input-group" style="width: 50px">
                                     <input [(ngModel)]="court.p1Score" type="number" autocomplete="off" class="form-control"
                                         [readonly]="!court.gameOn" (keyup.enter)="end()" (focus)="openP1ScoreModal()">
                                 </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="setPlayers && !court.gameOn">
+                            <td class="col-6 table-dark text-center" style="vertical-align: middle; font-size: small">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" (change)="setPair1Player1($event.target)">
+                                    <option>Select Player</option>
+                                    <option *ngFor="let player of players" (value)="player">{{player.name}}</option>
+                                </select>
+                            </td>
+                            <td class="col-6 table-dark text-center" style="vertical-align: middle; font-size: small">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" (change)="setPair1Player2($event.target)">
+                                    <option>Select Player</option>
+                                    <option *ngFor="let player of players" (value)="player">{{player.name}}</option>
+                                </select>
                             </td>
                         </tr>
                     </thead>
@@ -41,7 +55,7 @@
             <div class="col">
                 <table class="table table-dark">
                     <thead>
-                        <tr>
+                        <tr *ngIf="!setPlayers || court.gameOn">
                             <td class="table-dark text-center" style="vertical-align: middle; font-size: small">
                                 {{court.pair2[0].name + " / " + court.pair2[1].name}}</td>
                             <td class="col-2">
@@ -51,16 +65,33 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr *ngIf="setPlayers && !court.gameOn">
+                            <td class="col-6 table-dark text-center" style="vertical-align: middle; font-size: small">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" (change)="setPair2Player1($event.target)">
+                                    <option>Select Player</option>
+                                    <option *ngFor="let player of players" (value)="player">{{player.name}}</option>
+                                </select>
+                            </td>
+                            <td class="col-6 table-dark text-center" style="vertical-align: middle; font-size: small">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" (change)="setPair2Player2($event.target)">
+                                    <option>Select Player</option>
+                                    <option *ngFor="let player of players" (value)="player">{{player.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
                     </thead>
                 </table>
             </div>
         </div>
-        <div class="row">
+        <div class="row court-btns">
             <div class="col">
-                <button type="button" class="btn btn-primary btn-success" (click)="suggest()" *ngIf="!court.gameOn">Suggest</button>
+                <button type="button" class="btn btn-primary btn-success btn-margin" (click)="suggest()" *ngIf="!court.gameOn && !setPlayers && players.length >= 4">Suggest</button>
+                <button type="button" class="btn btn-primary btn-secondary" (click)="manualPairing()" *ngIf="!court.gameOn && players.length >= 4 && !setPlayers">Set Pair</button>
+                <button type="button" class="btn btn-primary btn-warning btn-margin" (click)="cancelPairing()" *ngIf="setPlayers">Cancel Pairing</button>
+                <button type="button" class="btn btn-primary btn-success" (click)="beginGame()" *ngIf="!court.gameOn && setPlayers && pair1Player1Id > 0 && pair1Player2Id > 0 && pair2Player1Id > 0 && pair2Player2Id > 0">Begin Game</button>
                 <button type="button" class="btn btn-primary btn-warning" (click)="cancelGame()" *ngIf="court.gameOn && court.p1Score == 0 && court.p2Score == 0">Cancel Game</button>
                 <button type="button" class="btn btn-primary" (click)="end()" *ngIf="court.gameOn && (court.p1Score > 0 || court.p2Score > 0)">End Game</button>
-                <button type="button" class="btn btn-primary btn-dark" (click)="removeCourt()" style="float:right" *ngIf="!court.gameOn">Close Court</button>
+                <button type="button" class="btn btn-primary btn-dark" (click)="removeCourt()" style="float:right" *ngIf="!court.gameOn && !setPlayers">Close Court</button>
             </div>
         </div>
     </div>
@@ -69,7 +100,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <span>{{court.pair1[0].name + " / " + court.pair1[1].name}}</span>
+                <span>{{"Court:" + court.id + " " + court.pair1[0].name + " / " + court.pair1[1].name}}</span>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeP1ScoreModal()"></button>
             </div>
             <div class="modal-body">
@@ -111,7 +142,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <span>{{court.pair2[0].name + " / " + court.pair2[1].name}}</span>
+                <span>{{"Court:" + court.id + " " + court.pair2[0].name + " / " + court.pair2[1].name}}</span>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeP2ScoreModal()"></button>
             </div>
             <div class="modal-body">

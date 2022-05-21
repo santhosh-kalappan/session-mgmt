@@ -45,3 +45,7 @@ input::-webkit-inner-spin-button {
 .court .outside .row {
   height: 50px;
 }
+
+.btn-margin {
+  margin-right: 10px;
+}

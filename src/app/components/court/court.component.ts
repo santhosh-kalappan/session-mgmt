@@ -13,6 +13,11 @@ export class CourtComponent implements OnInit {
   @Input() games: Game[] = [];
   @Output() newItemEvent = new EventEmitter<string>();
   court!: Court;
+  pair1Player1Id !: number;
+  pair1Player2Id !: number;
+  pair2Player1Id !: number;
+  pair2Player2Id !: number;
+  setPlayers: boolean = false;
 
   removeCourt() {
     this.newItemEvent.emit(this.court.id + "");
@@ -26,6 +31,7 @@ export class CourtComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setPlayers = false;
     this.court = ({
       id: this.id, pair1: [{ id: 1, name: "Player1", previousPairs: [], playing: false }, { id: 2, name: "Player2", previousPairs: [], playing: false }],
       pair2: [{ id: 1, name: "Player3", previousPairs: [], playing: false }, { id: 2, name: "Player4", previousPairs: [], playing: false }], gameOn: false, p1Score: 0, p2Score: 0
@@ -42,7 +48,7 @@ export class CourtComponent implements OnInit {
     };
     this.games.push(game);
     this.resetCourt(this.court);
-
+    this.resetManualPairingIds();
   }
 
   resetCourt(court: Court): void {
@@ -80,8 +86,8 @@ export class CourtComponent implements OnInit {
   }
 
   findPartner(player: Player): Player {
-    var partnerId;
     for (var i = 0; i < this.players.length; i++) {
+    var partnerId;
       partnerId = player.previousPairs.find(playerId => playerId == this.players[i].id);
       if (!partnerId)
         return this.players.splice(i, 1)[0];
@@ -95,9 +101,7 @@ export class CourtComponent implements OnInit {
       this.court.p2Score = 21;
     else
       this.court.p2Score = score + 2;
-
     this.closeP1ScoreModal();
-
   }
 
   updateP1Score(score: number) {
@@ -139,6 +143,60 @@ export class CourtComponent implements OnInit {
     this.court.pair2[0].previousPairs.pop();
     this.court.pair2[1].previousPairs.pop();
     this.resetCourt(this.court);
+  }
+
+  manualPairing() {
+    this.setPlayers = true;
+  }
+
+  cancelPairing() {
+    this.setPlayers = false;
+    this.resetManualPairingIds();
+  }
+
+  setPair1Player1(target:any) {
+    this.pair1Player1Id = this.players.find((player) => player.name === target.value)!.id;
+  }
+
+  setPair1Player2(target:any) {
+    this.pair1Player2Id = this.players.find((player) => player.name === target.value)!.id;
+  }
+
+  setPair2Player1(target:any) {
+    this.pair2Player1Id = this.players.find((player) => player.name === target.value)!.id;
+  }
+
+  setPair2Player2(target:any) {
+    this.pair2Player2Id = this.players.find((player) => player.name === target.value)!.id;
+  }
+
+  beginGame() {
+    this.setPlayers = false;
+    this.court.gameOn = true;
+    this.court.pair1 = this.formPair(1);
+    this.court.pair2 = this.formPair(2);
+  }
+
+  formPair(pairId: number): Player[] {
+    var pair: Player[] = [];
+    var player1Id = pairId == 1 ? this.pair1Player1Id : this.pair2Player1Id;
+    var player2Id = pairId == 1 ? this.pair1Player2Id : this.pair2Player2Id;
+    var player1: Player = this.players.splice(this.players.findIndex((player, index) => player1Id === player.id), 1)[0];
+    var player2: Player = this.players.splice(this.players.findIndex((player, index) => player2Id === player.id), 1)[0];
+    player1.playing = true;
+    player2.playing = true;
+    player1.previousPairs.push(player2.id);
+    player2.previousPairs.push(player1.id);
+    pair.push(player1);
+    pair.push(player2);
+    return pair;
+  }
+
+  resetManualPairingIds() {
+    this.pair1Player1Id = 0;
+    this.pair1Player2Id = 0;
+    this.pair2Player1Id = 0;
+    this.pair2Player2Id = 0;
   }
 
 }
