@@ -28,14 +28,14 @@ export class PlayerComponent implements OnInit {
     if (this.playerForm.value.name) {
       this.playersCount++;
       this.players.push({id: this.playersCount, name: this.playerForm.value.name.toUpperCase(), previousPairs:[], playing: false});
+      this.players.sort((a, b) => { return a.previousPairs.length - b.previousPairs.length });
     }
     this.playerForm.reset();
   }  
 
   remove(id: number): void {
-    var index = this.players.findIndex(player => player.id == id);
-    this.players.splice(index, 1);
-    this.playersCount--;
+    var index = this.restingPlayers.findIndex(player => player.id == id);
+    this.restingPlayers.splice(index, 1);
   }
 
   rest(id: number): void {

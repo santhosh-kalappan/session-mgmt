@@ -3,7 +3,7 @@
     <tr>
       <td class="table-light">
         <div class="row">
-          <div class="col-8" style="vertical-align: middle; font-size: xx-large; padding-top:25px;">
+          <div class="col-8" style="vertical-align: middle; font-size: xx-large; padding-top:25px; color:grey;">
             MK FAB Badminton Club
           </div>
           <div class="col-4" *ngIf="courtNos.length > 0">
@@ -35,12 +35,11 @@
 
 <app-player [players]="players" [restingPlayers]="restingPlayers"></app-player>
   
-
-<div class="row">
+<!-- <div class="row">
   <div class="col-3" *ngFor="let courtNo of courtNos">
     <app-result [scores]="scores" [games]="games" [courtId]="courtNo"></app-result>
   </div>
-</div>
+</div> -->
 
 <div class="modal" tabindex="-1" id="courtNoModal">
   <div class="modal-dialog modal-lg">

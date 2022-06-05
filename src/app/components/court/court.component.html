@@ -26,7 +26,7 @@
                             <td class="col-2">
                                 <div class="input-group" style="width: 50px">
                                     <input [(ngModel)]="court.p1Score" type="number" autocomplete="off" class="form-control"
-                                        [readonly]="!court.gameOn" (keyup.enter)="end()" (focus)="openP1ScoreModal()">
+                                        [readonly]="!court.gameOn" (keyup.enter)="end()" (focus)="openP1ScoreModal()" (click)="openP1ScoreModal()">
                                 </div>
                             </td>
                         </tr>
@@ -61,7 +61,7 @@
                             <td class="col-2">
                                 <div class="input-group" style="width: 50px">
                                     <input [(ngModel)]="court.p2Score" type="number" autocomplete="off" class="form-control"
-                                        [readonly]="!court.gameOn" (keyup.enter)="end()" (focus)="openP2ScoreModal()">
+                                        [readonly]="!court.gameOn" (keyup.enter)="end()" (focus)="openP2ScoreModal()" (click)="openP2ScoreModal()">
                                 </div>
                             </td>
                         </tr>

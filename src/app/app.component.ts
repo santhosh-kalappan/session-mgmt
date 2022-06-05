@@ -9,7 +9,6 @@ import { Player, Court, Game } from './model/model';
 })
 export class AppComponent {
   courtNos: number[] = [];
-  courts: Court[] = [];
   players: Player[] = [];
   restingPlayers: Player[] = [];
   scores: string[] = [];
@@ -44,4 +43,10 @@ export class AppComponent {
       }
     }
   }
+
+  closeCourtAddModal() {
+    var addCourtModal = document.getElementById("courtNoModal")!;
+    addCourtModal.style.display = "none";
+  }
+  
 }

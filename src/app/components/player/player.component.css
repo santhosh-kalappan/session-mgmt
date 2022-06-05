@@ -1,0 +1,13 @@
+.accordion-button:not(.collapsed)::after {
+    background-image: none;
+    /* transform: rotate(-180deg); */
+}
+
+h2 {
+    margin-bottom: 0px;
+}
+
+.accordion-button {
+    background-color: #f8f9fa;
+    color: grey;
+}

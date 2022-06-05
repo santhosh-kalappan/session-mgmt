@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { Player, Court, Game } from 'src/app/model/model';
 
 @Component({
@@ -53,6 +53,7 @@ export class CourtComponent implements OnInit {
 
   resetCourt(court: Court): void {
     this.players.push(court.pair1[0], court.pair1[1], court.pair2[0], court.pair2[1]);
+    this.players.sort((a, b) => { return a.previousPairs.length - b.previousPairs.length });
     court.gameOn = false;
     court.pair1 = [{ id: 1, name: "Player1", previousPairs: [], playing: false}, { id: 2, name: "Player2", previousPairs: [], playing: false}];
     court.pair2 = [{ id: 3, name: "Player3", previousPairs: [], playing: false}, { id: 4, name: "Player4", previousPairs: [], playing: false}];
@@ -70,7 +71,7 @@ export class CourtComponent implements OnInit {
 
   createPair(): Player[] {
     var pair: Player[] = [];
-    var player1: Player = this.players.splice(this.getRandomIndex(this.players.length - 1), 1)[0];
+    var player1: Player = this.players.splice(0, 1)[0];
     var player2: Player = this.findPartner(player1);
     player1.playing = true;
     player2.playing = true;
@@ -81,7 +82,7 @@ export class CourtComponent implements OnInit {
     return pair;
   }
 
-  getRandomIndex(max: number): number {
+  getPlayerWithLeastPlayedGames(max: number): number {
     return Math.floor(Math.random() * max);
   }
 
@@ -110,7 +111,7 @@ export class CourtComponent implements OnInit {
       this.court.p1Score = 21;
     else
       this.court.p1Score = score + 2;
-    this.closeP2ScoreModal()
+    this.closeP2ScoreModal();
   }
 
   openP1ScoreModal() {
@@ -197,6 +198,14 @@ export class CourtComponent implements OnInit {
     this.pair1Player2Id = 0;
     this.pair2Player1Id = 0;
     this.pair2Player2Id = 0;
+  }
+
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    const ESCAPE_KEYCODE = 27;
+    if (event.keyCode === ESCAPE_KEYCODE) {
+      this.closeP1ScoreModal();
+      this.closeP2ScoreModal();
+    }
   }
 
 }
