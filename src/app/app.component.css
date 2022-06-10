@@ -13,3 +13,11 @@ input:focus {
   outline: none;
   box-shadow: none;
 }
+
+.nav-link {
+  color:darkgray
+}
+
+.nav-link.active {
+  font-weight: bold;
+}

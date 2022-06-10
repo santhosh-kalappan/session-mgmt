@@ -71,7 +71,7 @@ export class CourtComponent implements OnInit {
 
   createPair(): Player[] {
     var pair: Player[] = [];
-    var player1: Player = this.players.splice(0, 1)[0];
+    var player1: Player = this.players.splice(this.getRandomPlayer(this.players.length), 1)[0];
     var player2: Player = this.findPartner(player1);
     player1.playing = true;
     player2.playing = true;
@@ -82,13 +82,13 @@ export class CourtComponent implements OnInit {
     return pair;
   }
 
-  getPlayerWithLeastPlayedGames(max: number): number {
+  getRandomPlayer(max: number): number {
     return Math.floor(Math.random() * max);
   }
 
   findPartner(player: Player): Player {
     for (var i = 0; i < this.players.length; i++) {
-    var partnerId;
+      var partnerId;
       partnerId = player.previousPairs.find(playerId => playerId == this.players[i].id);
       if (!partnerId)
         return this.players.splice(i, 1)[0];

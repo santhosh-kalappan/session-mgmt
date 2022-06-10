@@ -3,10 +3,10 @@
     <tr>
       <td class="table-light">
         <div class="row">
-          <div class="col-8" style="vertical-align: middle; font-size: xx-large; padding-top:25px; color:grey;">
+          <div class="col-10" style="vertical-align: middle; font-size: xx-large; padding-top:25px; color:grey;">
             MK FAB Badminton Club
           </div>
-          <div class="col-4" *ngIf="courtNos.length > 0">
+          <div class="col-2" *ngIf="courtNos.length > 0">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courtNoModal">
               Add more courts</button>
           </div>
@@ -33,14 +33,31 @@
   </tbody>
 </table>
 
-<app-player [players]="players" [restingPlayers]="restingPlayers"></app-player>
-  
-<!-- <div class="row">
-  <div class="col-3" *ngFor="let courtNo of courtNos">
-    <app-result [scores]="scores" [games]="games" [courtId]="courtNo"></app-result>
+<!--Session Details Tab View-->
+<ul class="nav nav-tabs" id="session-tabs" role="tablist">
+  <li class="nav-item">
+    <button class="nav-link active" id="player-mgmt-tab" data-bs-toggle="tab" data-bs-target="#player-mgmt-pane" type="button" role="tab" aria-controls="player-mgmt-pane" aria-selected="true">Players</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" id="result-tab" data-bs-toggle="tab" data-bs-target="#result-pane" type="button" role="tab" aria-controls="result-pane" aria-selected="true">Results</button>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="player-mgmt-pane" role="tabpanel" aria-labelledby="player-mgmt-tab" tabindex="0">
+    <div class="row" style="margin-top:10px;">
+      <app-player [players]="players" [restingPlayers]="restingPlayers"></app-player>
+    </div>
   </div>
-</div> -->
+  <div class="tab-pane" id="result-pane" role="tabpanel" aria-labelledby="result-tab" tabindex="0">
+    <div class="row" style="margin-top:10px;">
+      <div class="col-3" *ngFor="let courtNo of courtNos">
+        <app-result [scores]="scores" [games]="games" [courtId]="courtNo"></app-result>
+      </div>
+    </div> 
+  </div> 
+</div>
 
+<!--Court Selection Modal-->
 <div class="modal" tabindex="-1" id="courtNoModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
