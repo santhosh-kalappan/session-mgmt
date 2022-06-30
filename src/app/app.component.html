@@ -6,15 +6,15 @@
           <div class="col-10" style="vertical-align: middle; font-size: xx-large; padding-top:25px; color:grey;">
             MK FAB Badminton Club
           </div>
-          <div class="col-2" *ngIf="courtNos.length > 0">
+          <div class="col-2">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courtNoModal">
-              Add more courts</button>
+              Add courts</button>
           </div>
         </div>
       </td>
     </tr>
   </thead>
-  <tbody>
+  <!-- <tbody>
     <tr>
       <td class="table-light">
         <div class="row" *ngIf="courtNos.length == 0">
@@ -24,19 +24,22 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-3" *ngFor="let courtNo of courtNos">
+          <div class="col-4" *ngFor="let courtNo of courtNos">
             <app-court [players]="players" [id]="courtNo" [games]="games" (newItemEvent)="removeCourt($event)"></app-court>
           </div>
         </div>
       </td>
     </tr>
-  </tbody>
+  </tbody> -->
 </table>
 
 <!--Session Details Tab View-->
 <ul class="nav nav-tabs" id="session-tabs" role="tablist">
   <li class="nav-item">
     <button class="nav-link active" id="player-mgmt-tab" data-bs-toggle="tab" data-bs-target="#player-mgmt-pane" type="button" role="tab" aria-controls="player-mgmt-pane" aria-selected="true">Players</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" id="court-tab" data-bs-toggle="tab" data-bs-target="#courts-pane" type="button" role="tab" aria-controls="courts-pane" aria-selected="true">Courts</button>
   </li>
   <li class="nav-item">
     <button class="nav-link" id="result-tab" data-bs-toggle="tab" data-bs-target="#result-pane" type="button" role="tab" aria-controls="result-pane" aria-selected="true">Results</button>
@@ -48,9 +51,31 @@
       <app-player [players]="players" [restingPlayers]="restingPlayers"></app-player>
     </div>
   </div>
+  <div class="tab-pane" id="courts-pane" role="tabpanel" aria-labelledby="court-tab" tabindex="0">
+    <table class="table">
+      <tbody>
+        <tr class="table-light">
+          <!-- <div class="row" *ngIf="courtNos.length == 0" style="margin-top:10px;">
+            <div class="col-12" style="text-align: center;">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courtNoModal">
+              Add Courts</button>
+            </div>
+          </div> -->
+          <div class="row" style="margin-top:10px;" *ngIf="courtNos.length > 0">
+            <div class="col-4" *ngFor="let courtNo of courtNos">
+              <app-court [players]="players" [id]="courtNo" [games]="games" (newItemEvent)="removeCourt($event)"></app-court>
+            </div>
+          </div>
+        </tr>
+      </tbody>
+      <div class="row" style="margin-top:10px;">
+        <app-player [players]="players" [restingPlayers]="restingPlayers" [displayArea]="'court'"></app-player>
+      </div>
+    </table>
+  </div>
   <div class="tab-pane" id="result-pane" role="tabpanel" aria-labelledby="result-tab" tabindex="0">
     <div class="row" style="margin-top:10px;">
-      <div class="col-3" *ngFor="let courtNo of courtNos">
+      <div class="col-4" *ngFor="let courtNo of courtNos">
         <app-result [scores]="scores" [games]="games" [courtId]="courtNo"></app-result>
       </div>
     </div> 

@@ -11,6 +11,7 @@ export class PlayerComponent implements OnInit {
 
   @Input() players!: Player[];
   @Input() restingPlayers!: Player[];
+  @Input() displayArea!: string;
   playersCount: number = 0;
 
   playerForm = this.formBuilder.group({

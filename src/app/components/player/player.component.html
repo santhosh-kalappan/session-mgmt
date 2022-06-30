@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="!displayArea">
   <div class="col-12">
     <form (ngSubmit)="add()" [formGroup]="playerForm">
       <div class="input-group">
@@ -18,7 +18,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button">
-          Available
+          {{displayArea ? "Waiting" : "Available"}}
         </button>
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<div style="margin:20px 10px 0px 10px">
+<div style="margin:20px 10px 0px 10px" *ngIf="!displayArea">
   <div class="accordion">
     <div class="accordion-item">
       <h2 class="accordion-header">
@@ -50,22 +50,3 @@
     </div>
   </div>
 </div>
-
-
-<!-- <div class="row" style="margin-left: 10px; margin-bottom: 10px;" *ngIf="players.length > 0">
-  <h3>Active</h3>
-  <div class="col-12" style="margin-top: -20px;">
-    <button type="button" class="btn btn-success btn-rounded rounded-pill btn-sm" *ngFor="let player of players" style="margin-right: 10px; margin-top:10px">
-      <i class="bi bi-pause-circle-fill" (click)="rest(player.id)"></i> {{player.name}} <span class="badge rounded-pill bg-secondary">{{player.previousPairs.length}}</span>
-    </button>
-  </div>
-</div>
-
-<div class="row" style="margin-left: 10px; margin-bottom: 10px;" *ngIf="restingPlayers.length > 0">
-  <h3>Resting</h3>
-  <div class="col-12" style="margin-top: -20px;">
-    <button type="button" class="btn btn-secondary btn-rounded rounded-pill btn-sm" *ngFor="let player of restingPlayers" style="margin-right: 10px; margin-top:10px">
-      <i class="bi bi-play-circle-fill" (click)="play(player.id)"></i> {{player.name}} <i class="bi bi-x-circle-fill" (click)="remove(player.id)"></i>
-    </button>
-  </div>  
-</div> -->
