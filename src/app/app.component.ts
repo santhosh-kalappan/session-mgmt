@@ -13,6 +13,7 @@ export class AppComponent {
   restingPlayers: Player[] = [];
   scores: string[] = [];
   games: Game[] = [];
+  showAddCourtBtn: boolean = false;
 
   constructor(private formBuilder: FormBuilder) { 
   }
@@ -24,6 +25,13 @@ export class AppComponent {
     function disableF5(e:any) {
        if ((e.which || e.keyCode) == 116) e.preventDefault(); 
     };
+  }
+
+  toggleShowAddCourtButton(tabName: string): void {
+    if (tabName == 'court')
+      this.showAddCourtBtn = true;
+    else 
+      this.showAddCourtBtn = false;
   }
 
   addCourt(courtId: number, el: HTMLButtonElement): void {

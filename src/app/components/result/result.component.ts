@@ -18,10 +18,21 @@ export class ResultComponent implements OnInit {
   }
 
   getFormattedScore(game: Game) {
-    var formattedScore = game.p1Score > game.p2Score ? game.p1Score + " - " + game.p2Score : game.p2Score + " - " + game.p1Score;
-    formattedScore += " " + (game.p1Score > game.p2Score ? game.pair1 : game.pair2) + " VS ";
-    formattedScore += (game.p1Score > game.p2Score ? game.pair2 : game.pair1);
+    var formattedScore = "<b>" + (game.p1Score > game.p2Score ? game.pair1 : game.pair2) + "</b> VS ";
+    formattedScore += (game.p1Score > game.p2Score ? game.pair2 : game.pair1) + " ";
+    formattedScore += game.p1Score > game.p2Score ? game.p1Score + " - " + game.p2Score : game.p2Score + " - " + game.p1Score;
     return formattedScore;
+  }
+
+  getScore(game: Game) {
+    var score = game.p1Score > game.p2Score ? ("<b>" + game.p1Score + "</b> - " + game.p2Score) : ("<b>" + game.p2Score + "</b> - " + game.p1Score);
+    return score;
+  }
+
+  getPair(game: Game) {
+    var pair = "<b>" + (game.p1Score > game.p2Score ? game.pair1 : game.pair2) + "</b> VS ";
+    pair += (game.p1Score > game.p2Score ? game.pair2 : game.pair1) + " ";
+    return pair;
   }
 
   getCourtGames() {
