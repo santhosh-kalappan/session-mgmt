@@ -1,0 +1,90 @@
+<table class="table">
+  <thead>
+    <tr>
+      <td class="table-light">
+        <div class="row">
+          <div class="col-10" style="vertical-align: middle; font-size: xx-large; padding-top:25px; color:grey;">
+            MK FAB Badminton Club
+          </div>
+          <div class="col-2" *ngIf="showAddCourtBtn">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#courtNoModal">
+              Add courts</button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </thead>
+</table>
+
+<!--Session Details Tab View-->
+<ul class="nav nav-tabs" id="session-tabs" role="tablist">
+  <li class="nav-item">
+    <button class="nav-link active" (click)="toggleShowAddCourtButton('player')" id="player-mgmt-tab" data-bs-toggle="tab" data-bs-target="#player-mgmt-pane" type="button" role="tab" aria-controls="player-mgmt-pane" aria-selected="true">Players</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" (click)="toggleShowAddCourtButton('court')" id="court-tab" data-bs-toggle="tab" data-bs-target="#courts-pane" type="button" role="tab" aria-controls="courts-pane" aria-selected="true">Courts</button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" (click)="toggleShowAddCourtButton('result')" id="result-tab" data-bs-toggle="tab" data-bs-target="#result-pane" type="button" role="tab" aria-controls="result-pane" aria-selected="true">Results</button>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="player-mgmt-pane" role="tabpanel" aria-labelledby="player-mgmt-tab" tabindex="0">
+    <div class="row" style="margin-top:10px;">
+      <app-player [players]="players" [restingPlayers]="restingPlayers"></app-player>
+    </div>
+  </div>
+  <div class="tab-pane" id="courts-pane" role="tabpanel" aria-labelledby="court-tab" tabindex="0">
+    <table class="table">
+      <tbody>
+        <tr class="table-light">
+          <div class="row" style="margin-top:10px;" *ngIf="courtNos.length > 0">
+            <div class="col-4" *ngFor="let courtNo of courtNos">
+              <app-court [players]="players" [id]="courtNo" [games]="games" (newItemEvent)="removeCourt($event)"></app-court>
+            </div>
+          </div>
+        </tr>
+      </tbody>
+      <div class="row" style="margin-top:10px;">
+        <app-player [players]="players" [restingPlayers]="restingPlayers" [displayArea]="'court'"></app-player>
+      </div>
+    </table>
+  </div>
+  <div class="tab-pane" id="result-pane" role="tabpanel" aria-labelledby="result-tab" tabindex="0">
+    <div class="row" style="margin-top:10px;">
+      <div class="col-4" *ngFor="let courtNo of courtNos">
+        <app-result [scores]="scores" [games]="games" [courtId]="courtNo"></app-result>
+      </div>
+    </div> 
+  </div> 
+</div>
+
+<!--Court Selection Modal-->
+<div class="modal" tabindex="-1" id="courtNoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Select Court No</span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-1"><button id="court1" #court1 class="btn btn-primary" (click)="addCourt(1, court1)">01</button></div>
+            <div class="col-1"><button id="court2" #court2 class="btn btn-primary" (click)="addCourt(2, court2)">02</button></div>
+            <div class="col-1"><button id="court3" #court3 class="btn btn-primary" (click)="addCourt(3, court3)">03</button></div>
+            <div class="col-1"><button id="court4" #court4 class="btn btn-primary" (click)="addCourt(4, court4)">04</button></div>
+            <div class="col-1"><button id="court5" #court5 class="btn btn-primary" (click)="addCourt(5, court5)">05</button></div>
+            <div class="col-1"><button id="court6" #court6 class="btn btn-primary" (click)="addCourt(6, court6)">06</button></div>
+            <div class="col-1"><button id="court7" #court7 class="btn btn-primary" (click)="addCourt(7, court7)">07</button></div>
+            <div class="col-1"><button id="court8" #court8 class="btn btn-primary" (click)="addCourt(8, court8)">08</button></div>
+            <div class="col-1"><button id="court9" #court9 class="btn btn-primary" (click)="addCourt(9, court9)">09</button></div>
+            <div class="col-1"><button id="court10" #court10 class="btn btn-primary" (click)="addCourt(10, court10)">10</button></div>
+            <div class="col-1"><button id="court11" #court11 class="btn btn-primary" (click)="addCourt(11, court11)">11</button></div>
+            <div class="col-1"><button id="court12" #court12 class="btn btn-primary" (click)="addCourt(12, court12)">12</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

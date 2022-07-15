@@ -8,12 +8,8 @@ import { Player, Court, Game } from './model/model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  courtNos: number[] = [];
-  players: Player[] = [];
-  restingPlayers: Player[] = [];
-  scores: string[] = [];
-  games: Game[] = [];
-  showAddCourtBtn: boolean = false;
+
+  loginSuccess: boolean = false;
 
   constructor(private formBuilder: FormBuilder) { 
   }
@@ -27,34 +23,4 @@ export class AppComponent {
     };
   }
 
-  toggleShowAddCourtButton(tabName: string): void {
-    if (tabName == 'court')
-      this.showAddCourtBtn = true;
-    else 
-      this.showAddCourtBtn = false;
-  }
-
-  addCourt(courtId: number, el: HTMLButtonElement): void {
-      this.courtNos.push(courtId);
-      el.disabled = true;
-  }
-
-  removeCourt(courtId: string): void {
-    if (this.courtNos.length > 0) {
-      var btn = document.getElementById('court' + courtId)!;
-      btn.removeAttribute("disabled");
-      for (var i = 0; i < this.courtNos.length; i++) {
-        if (this.courtNos[i] == parseInt(courtId)) {
-          this.courtNos.splice(i, 1);
-          return;
-        }
-      }
-    }
-  }
-
-  closeCourtAddModal() {
-    var addCourtModal = document.getElementById("courtNoModal")!;
-    addCourtModal.style.display = "none";
-  }
-  
 }
